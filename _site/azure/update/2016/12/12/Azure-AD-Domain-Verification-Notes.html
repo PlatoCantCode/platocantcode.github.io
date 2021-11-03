@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Azure AD Domain Verification</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body>
+    <nav>
+  
+    <a href="/" >Home</a>
+  
+    <a href="/about.html" >About</a>
+  
+    <a href="/blog.html" >Blog</a>
+  
+    <a href="/staff.html" >Staff</a>
+  
+</nav>
+
+
+    <h1>Azure AD Domain Verification</h1>
+
+<p>
+  12 Dec 2016
+  
+  
+    - <a href="/authors/joseph.html">Joseph Gibs</a>
+  
+</p>
+
+<h1 id="azure-ad-domain-verification">Azure AD Domain Verification</h1>
+
+<p>2016-12-12 15:24:27</p>
+
+<hr />
+
+<p><strong>Setup domain verification</strong>
+Microsoft wants a @ in the txt record.
+However, the @ sign just means the dns origin is the same for the domain.
+So if the msoft request is
+@.familyhosted.com</p>
+
+<p>And @ isn’t allowed with your registrar and you are trying to authorize internal.familyhosted.com you can just replace the @ with “internal”</p>
+
+<p>The @ is more of a wildcard meant to make the process easer and doesn’t require more work on msofts side.
+Internal.familyhosted.com</p>
+
+<p>**Windows
+**Check GPOs and ensure WMI has trust groups with right ip subnets as trusted hosts</p>
+
+<p><strong>Enable remote disk mgmt</strong></p>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Enable-Netfirewall</span><span class="w">
+</span><span class="nx">Sc</span><span class="w"> </span><span class="nx">start</span><span class="w"> </span><span class="nx">vds</span><span class="w">
+</span></code></pre></div></div>
+
+
+  </body>
+</html>

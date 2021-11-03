@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Azure DNS Zones</title>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+  </head>
+  <body>
+    <nav>
+  
+    <a href="/" >Home</a>
+  
+    <a href="/about.html" >About</a>
+  
+    <a href="/blog.html" >Blog</a>
+  
+    <a href="/staff.html" >Staff</a>
+  
+</nav>
+
+
+    <h1 id="azure-dns-zones">Azure DNS Zones</h1>
+<p>2020-07-09 21:27:39</p>
+
+<p>Source:
+<a href="https://docs.microsoft.com/en-us/azure/dns/private-dns-getstarted-powershell">https://docs.microsoft.com/en-us/azure/dns/private-dns-getstarted-powershell</a></p>
+
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Install-Module</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">Az.PrivateDns</span><span class="w"> </span><span class="nt">-force</span><span class="w">
+
+</span><span class="nv">$backendSubnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-AzVirtualNetworkSubnetConfig</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">backendSubnet</span><span class="w"> </span><span class="nt">-AddressPrefix</span><span class="w"> </span><span class="s2">"10.2.0.0/24"</span><span class="w">
+</span><span class="nv">$vnet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-AzVirtualNetwork</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-ResourceGroupName</span><span class="w"> </span><span class="nx">MyAzureResourceGroup</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-Location</span><span class="w"> </span><span class="nx">eastus</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-Name</span><span class="w"> </span><span class="nx">myAzureVNet</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-AddressPrefix</span><span class="w"> </span><span class="nx">10.2.0.0/16</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-Subnet</span><span class="w"> </span><span class="nv">$backendSubnet</span><span class="w">
+
+</span><span class="nv">$zone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-AzPrivateDnsZone</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">private.contoso.com</span><span class="w"> </span><span class="nt">-ResourceGroupName</span><span class="w"> </span><span class="nx">MyAzureResourceGroup</span><span class="w">
+
+</span><span class="nv">$link</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">New-AzPrivateDnsVirtualNetworkLink</span><span class="w"> </span><span class="nt">-ZoneName</span><span class="w"> </span><span class="nx">private.contoso.com</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-ResourceGroupName</span><span class="w"> </span><span class="nx">MyAzureResourceGroup</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="s2">"mylink"</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-VirtualNetworkId</span><span class="w"> </span><span class="nv">$vnet</span><span class="o">.</span><span class="nf">id</span><span class="w"> </span><span class="nt">-EnableRegistration</span><span class="w">
+</span></code></pre></div></div>
+<h2 id="create-new-dns-record">create new dns record</h2>
+<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">New-AzPrivateDnsRecordSet</span><span class="w"> </span><span class="nt">-Name</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="nt">-RecordType</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="nt">-ZoneName</span><span class="w"> </span><span class="nx">private.contoso.com</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-ResourceGroupName</span><span class="w"> </span><span class="nx">MyAzureResourceGroup</span><span class="w"> </span><span class="nt">-Ttl</span><span class="w"> </span><span class="nx">3600</span><span class="w"> </span><span class="se">`
+</span><span class="nt">-PrivateDnsRecords</span><span class="w"> </span><span class="p">(</span><span class="n">New-AzPrivateDnsRecordConfig</span><span class="w"> </span><span class="nt">-IPv4Address</span><span class="w"> </span><span class="s2">"10.2.0.4"</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+<p>EOF</p>
+
+  </body>
+</html>
